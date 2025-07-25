@@ -3,7 +3,7 @@
 <style>
 	#beaver {
 		position: fixed;
-		/* bottom and left are set by JS */
+		/* top and left are set by JS */
 		width: 32px;
 		height: 32px;
 		z-index: 9999;
@@ -15,7 +15,7 @@
 		
 		background-position-y: var(--animation-y);
 		animation: move-sprite var(--animation-duration) steps(var(--animation-frames)) infinite;
-        transition: bottom 1s ease-in-out;
+        transition: top 1s ease-in-out;
 	}
 </style>
 
@@ -35,12 +35,14 @@
             walk:      { y: -32,  frames: 4, duration: 0.4 },
             swim:      { y: -224, frames: 4, duration: 0.6 },
             idleWater: { y: -192, frames: 4, duration: 0.8 },
+            ascent:    { y: -320, frames: 4, duration: 0.5 },
         };
 
-        let currentState = 'walk';
+        let currentState = '';
         let x, y; // position
 		let xSpeed = 1;
 		let directionX = 1;
+        let introDone = false;
 
         function setAnimation(name) {
             const anim = animations[name];
@@ -52,6 +54,40 @@
             currentState = name;
         }
 
+        // --- Intro Logic ---
+        function runIntro() {
+            // Position near where the header would be
+            x = 100;
+            y = 150; // pixels from top
+            beaver.style.left = `${x}px`;
+            beaver.style.top = `${y}px`;
+
+            setAnimation('ascent');
+
+            // After ascent animation, start swimming out
+            setTimeout(() => {
+                setAnimation('swim');
+                xSpeed = 2;
+                directionX = 1;
+                introSwimLoop();
+            }, 500); // duration of ascent
+        }
+
+        function introSwimLoop() {
+            x += xSpeed * directionX;
+            beaver.style.left = `${x}px`;
+
+            const viewportWidth = window.innerWidth;
+            if (x > viewportWidth) {
+                introDone = true;
+                resetBeaver();
+                frameLoop(); // Start main random loop
+            } else {
+                requestAnimationFrame(introSwimLoop);
+            }
+        }
+
+        // --- Main Wander Logic ---
         function resetBeaver() {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
@@ -59,32 +95,25 @@
             directionX = Math.random() < 0.5 ? 1 : -1;
             xSpeed = Math.random() * 1.5 + 0.5;
             
-            // Start off screen
             x = directionX === 1 ? -64 : viewportWidth;
+            y = Math.random() * (viewportHeight - 100);
             
-            // Start at a random height
-            y = Math.random() * (viewportHeight - 100) + 50; // pixels from bottom
-            beaver.style.bottom = `${y}px`;
+            beaver.style.top = `${y}px`;
 
-            // Decide if walking or swimming based on scroll
             const isScrolled = window.scrollY > viewportHeight / 2;
             setAnimation(isScrolled ? 'swim' : 'walk');
         }
 
-        // --- Movement Logic ---
 		function frameLoop() {
 			const viewportWidth = window.innerWidth;
-            const beaverWidth = 64; // 32px * 2 scale
+            const beaverWidth = 64;
 
-			// Move beaver
 			x += xSpeed * directionX;
 
-            // Check if off-screen to reset
             if ((directionX === 1 && x > viewportWidth) || (directionX === -1 && x < -beaverWidth)) {
                 resetBeaver();
             }
 			
-            // Update styles
 			beaver.style.transform = directionX === 1 ? 'scale(2)' : 'scale(2) scaleX(-1)';
 			beaver.style.left = `${x}px`;
 
@@ -93,6 +122,8 @@
 
         // --- Scroll Logic ---
         function handleScroll() {
+            if (!introDone) return; // Don't interfere with intro
+
             const viewportHeight = window.innerHeight;
             const isScrolled = window.scrollY > viewportHeight / 2;
 
@@ -110,7 +141,6 @@
         });
 
         // --- Initialization ---
-        resetBeaver(); // Initial placement
-		frameLoop();
+        runIntro();
 	}
 </script> 
