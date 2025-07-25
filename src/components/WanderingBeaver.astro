@@ -1,0 +1,67 @@
+<div id="beaver"></div>
+
+<style>
+	#beaver {
+		position: fixed;
+		bottom: 20px;
+		left: 20px;
+		width: 32px;
+		height: 32px;
+		z-index: 9999;
+		image-rendering: pixelated;
+		transform: scale(2);
+		transform-origin: bottom left;
+		background-image: url('/Beaver%20Sprite%20Sheet.png');
+		background-repeat: no-repeat;
+		animation: walk 0.4s steps(4) infinite;
+	}
+</style>
+
+<style is:global>
+	@keyframes walk {
+		from { background-position: 0px -32px; }
+		to { background-position: -128px -32px; }
+	}
+</style>
+
+<script is:inline>
+	const beaver = document.getElementById("beaver");
+
+	if (beaver) {
+		let x = 20;
+		let xSpeed = 1;
+		let directionX = 1; // 1 for right, -1 for left
+		let lastDirectionChange = 0;
+		const directionChangeInterval = 3000; // Change direction every 3 seconds
+
+		function moveBeaver() {
+			const now = Date.now();
+			const viewportWidth = window.innerWidth;
+
+			if (now - lastDirectionChange > directionChangeInterval + Math.random() * 2000) {
+				directionX *= -1;
+				beaver.style.transform = directionX === 1 ? 'scale(2)' : 'scale(2) scaleX(-1)';
+				xSpeed = Math.random() * 1.5 + 0.5; // Random speed
+				lastDirectionChange = now;
+			}
+			
+			x += xSpeed * directionX;
+
+			if (x <= 0) {
+				x = 0;
+				directionX = 1;
+				beaver.style.transform = 'scale(2)';
+			} else if (x >= viewportWidth - (beaver.offsetWidth * 2)) {
+				x = viewportWidth - (beaver.offsetWidth * 2);
+				directionX = -1;
+				beaver.style.transform = 'scale(2) scaleX(-1)';
+			}
+			
+			beaver.style.left = `${x}px`;
+
+			requestAnimationFrame(moveBeaver);
+		}
+
+		moveBeaver();
+	}
+</script> 
