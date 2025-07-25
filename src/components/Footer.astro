@@ -1,0 +1,31 @@
+---
+const today = new Date();
+---
+
+<footer>
+	&copy; {today.getFullYear()} cassidoo. <a href="https://github.com/hugo/den">This blog is open source</a>! <3
+</footer>
+<style>
+	footer {
+		background-color: var(--taupe);
+		border: var(--border-width) solid var(--border);
+		box-shadow: var(--shadow-offset-small) var(--border);
+		padding: 1.5rem;
+		text-align: center;
+		font-size: 0.9rem;
+		font-weight: 600;
+		margin-top: 3rem;
+	}
+	
+	footer a {
+		color: var(--text);
+		text-decoration: underline;
+		text-decoration-thickness: 2px;
+		text-underline-offset: 2px;
+		text-decoration-color: var(--mandarine);
+	}
+	
+	footer a:hover {
+		color: var(--mandarine);
+	}
+</style>
