@@ -14,7 +14,7 @@
 	/* Base Colors */
 	--white: #FAFAFA;
 	--black: #1A1A1A;
-	--gray: #6B6B6B;
+	--gray: #8B7D71; /* Medium taupe instead of grey */
 	
 	/* Functional Colors */
 	--background: var(--light-taupe);
@@ -35,20 +35,22 @@
 /* Dark Mode Variables */
 body.dark-mode,
 [data-theme="dark"] {
-	--background: #2A2A2A;
+	--background: #3A3530; /* Dark taupe background instead of grey */
 	--text: var(--white);
 	--border: var(--white);
 	--taupe: #4A453F;
 	--light-taupe: #3A3530;
+	--dark-taupe: #5A524A; /* Adjusted for better contrast in dark mode */
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
-		--background: #2A2A2A;
+		--background: #3A3530; /* Dark taupe background instead of grey */
 		--text: var(--white);
 		--border: var(--white);
 		--taupe: #4A453F;
 		--light-taupe: #3A3530;
+		--dark-taupe: #5A524A; /* Adjusted for better contrast in dark mode */
 	}
 }
 

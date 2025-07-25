@@ -1,2 +1,2 @@
-export const SITE_TITLE = "Hugo's blog";
-export const SITE_DESCRIPTION = "Welcome to the Beaver's den";
+export const SITE_TITLE = "Hugo Hernández";
+export const SITE_DESCRIPTION = "Creative Technologist | AI Research | Philosophy of Mind";
