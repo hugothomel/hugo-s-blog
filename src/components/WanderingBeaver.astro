@@ -3,24 +3,26 @@
 <style>
 	#beaver {
 		position: fixed;
-		bottom: 20px;
-		left: 20px;
+		/* bottom and left are set by JS */
 		width: 32px;
 		height: 32px;
 		z-index: 9999;
 		image-rendering: pixelated;
 		transform: scale(2);
-		transform-origin: bottom left;
+		transform-origin: center;
 		background-image: url('/Beaver%20Sprite%20Sheet.png');
 		background-repeat: no-repeat;
-		animation: walk 0.4s steps(4) infinite;
+		
+		background-position-y: var(--animation-y);
+		animation: move-sprite var(--animation-duration) steps(var(--animation-frames)) infinite;
+        transition: bottom 1s ease-in-out;
 	}
 </style>
 
 <style is:global>
-	@keyframes walk {
-		from { background-position: 0px -32px; }
-		to { background-position: -128px -32px; }
+	@keyframes move-sprite {
+		from { background-position-x: 0px; }
+		to { background-position-x: calc(-32px * var(--animation-frames)); }
 	}
 </style>
 
@@ -28,40 +30,87 @@
 	const beaver = document.getElementById("beaver");
 
 	if (beaver) {
-		let x = 20;
+        // --- Animation & State Setup ---
+        const animations = {
+            walk:      { y: -32,  frames: 4, duration: 0.4 },
+            swim:      { y: -224, frames: 4, duration: 0.6 },
+            idleWater: { y: -192, frames: 4, duration: 0.8 },
+        };
+
+        let currentState = 'walk';
+        let x, y; // position
 		let xSpeed = 1;
-		let directionX = 1; // 1 for right, -1 for left
-		let lastDirectionChange = 0;
-		const directionChangeInterval = 3000; // Change direction every 3 seconds
+		let directionX = 1;
 
-		function moveBeaver() {
-			const now = Date.now();
+        function setAnimation(name) {
+            const anim = animations[name];
+            if (!anim || currentState === name) return;
+
+            beaver.style.setProperty('--animation-y', `${anim.y}px`);
+            beaver.style.setProperty('--animation-frames', anim.frames);
+            beaver.style.setProperty('--animation-duration', `${anim.duration}s`);
+            currentState = name;
+        }
+
+        function resetBeaver() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            directionX = Math.random() < 0.5 ? 1 : -1;
+            xSpeed = Math.random() * 1.5 + 0.5;
+            
+            // Start off screen
+            x = directionX === 1 ? -64 : viewportWidth;
+            
+            // Start at a random height
+            y = Math.random() * (viewportHeight - 100) + 50; // pixels from bottom
+            beaver.style.bottom = `${y}px`;
+
+            // Decide if walking or swimming based on scroll
+            const isScrolled = window.scrollY > viewportHeight / 2;
+            setAnimation(isScrolled ? 'swim' : 'walk');
+        }
+
+        // --- Movement Logic ---
+		function frameLoop() {
 			const viewportWidth = window.innerWidth;
+            const beaverWidth = 64; // 32px * 2 scale
 
-			if (now - lastDirectionChange > directionChangeInterval + Math.random() * 2000) {
-				directionX *= -1;
-				beaver.style.transform = directionX === 1 ? 'scale(2)' : 'scale(2) scaleX(-1)';
-				xSpeed = Math.random() * 1.5 + 0.5; // Random speed
-				lastDirectionChange = now;
-			}
-			
+			// Move beaver
 			x += xSpeed * directionX;
 
-			if (x <= 0) {
-				x = 0;
-				directionX = 1;
-				beaver.style.transform = 'scale(2)';
-			} else if (x >= viewportWidth - (beaver.offsetWidth * 2)) {
-				x = viewportWidth - (beaver.offsetWidth * 2);
-				directionX = -1;
-				beaver.style.transform = 'scale(2) scaleX(-1)';
-			}
+            // Check if off-screen to reset
+            if ((directionX === 1 && x > viewportWidth) || (directionX === -1 && x < -beaverWidth)) {
+                resetBeaver();
+            }
 			
+            // Update styles
+			beaver.style.transform = directionX === 1 ? 'scale(2)' : 'scale(2) scaleX(-1)';
 			beaver.style.left = `${x}px`;
 
-			requestAnimationFrame(moveBeaver);
+			requestAnimationFrame(frameLoop);
 		}
 
-		moveBeaver();
+        // --- Scroll Logic ---
+        function handleScroll() {
+            const viewportHeight = window.innerHeight;
+            const isScrolled = window.scrollY > viewportHeight / 2;
+
+            if (isScrolled && currentState === 'walk') {
+                setAnimation('swim');
+            } else if (!isScrolled && (currentState === 'swim' || currentState === 'idleWater')) {
+                setAnimation('walk');
+            }
+        }
+        
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(handleScroll, 100);
+        });
+
+        // --- Initialization ---
+        resetBeaver(); // Initial placement
+		frameLoop();
 	}
 </script> 
