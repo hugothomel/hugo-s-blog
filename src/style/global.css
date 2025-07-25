@@ -81,7 +81,7 @@ html,
 body,
 button,
 code {
-	font-family: "Space Grotesk", "iA Writer Mono", monospace;
+	font-family: "Sora", "iA Writer Mono", monospace;
 	font-weight: 500;
 }
 
@@ -203,7 +203,7 @@ ul.posts-list {
 }
 
 .post {
-	background-color: var(--white);
+	background-color: var(--taupe);
 	border: var(--border-width) solid var(--border);
 	box-shadow: var(--shadow-offset-small) var(--border);
 	padding: 1.5rem;
@@ -293,7 +293,7 @@ code {
 }
 
 pre {
-	background-color: var(--white);
+	background-color: var(--taupe);
 	border: var(--border-width) solid var(--border);
 	box-shadow: var(--shadow-offset-small) var(--border);
 	padding: 1.5rem;
@@ -324,7 +324,7 @@ blockquote {
 /* Tables */
 table {
 	width: 100%;
-	background-color: var(--white);
+	background-color: var(--taupe);
 	border: var(--border-width) solid var(--border);
 	box-shadow: var(--shadow-offset-small) var(--border);
 	border-collapse: separate;
@@ -364,7 +364,7 @@ button:hover {
 
 /* Forms */
 input, textarea {
-	background-color: var(--white);
+	background-color: var(--taupe);
 	border: var(--border-width) solid var(--border);
 	box-shadow: var(--shadow-offset-small) var(--border);
 	padding: 0.75rem;
@@ -390,7 +390,7 @@ input:focus, textarea:focus {
 }
 
 .blog-post {
-	background-color: var(--white);
+	background-color: var(--taupe);
 	border: var(--border-width) solid var(--border);
 	box-shadow: var(--shadow-offset) var(--border);
 	padding: 2rem;
@@ -424,7 +424,7 @@ body.dark-mode pre,
 body.dark-mode table,
 body.dark-mode input,
 body.dark-mode textarea {
-	background-color: #3A3A3A;
+	background-color: var(--dark-taupe);
 }
 
 body.dark-mode nav {
