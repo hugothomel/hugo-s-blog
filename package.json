@@ -3,10 +3,10 @@
 	"version": "0.0.5",
 	"private": true,
 	"scripts": {
-		"dev": "npx tinacms dev -c 'astro dev'",
+		"dev": "tinacms dev -c \"astro dev\"",
 		"start": "astro dev",
 		"build": "tinacms build && astro build",
-		"preview": "astro preview",
+		"preview": "astro preview --host",
 		"astro": "astro"
 	},
 	"devDependencies": {

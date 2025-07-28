@@ -1,12 +1,12 @@
 import { defineConfig } from "tinacms";
 
 // Your hosting provider likely exposes this as an environment variable
-const branch = process.env.HEAD || "main";
+const branch = process.env.HEAD || "master";
 
 export default defineConfig({
 	branch,
-	clientId: process.env.TINACLIENTID, // Get this from tina.io
-	token: process.env.TINATOKEN, // Get this from tina.io
+	clientId: process.env.TINACLIENTID || '823e813a-e2fc-4530-9448-4dbdc241ad88', // Get this from tina.io
+	token: process.env.TINATOKEN || '4c4ee7bc3471f8c45cf21437c13c2caa14ca163e', // Get this from tina.io
 
 	build: {
 		outputFolder: "admin",
@@ -123,7 +123,7 @@ export default defineConfig({
 	},
 	search: {
 		tina: {
-			indexerToken: process.env.TINASEARCH,
+			indexerToken: process.env.TINASEARCH || '3ae4126b80fae252cec0a4a0ddc081f90efca757',
 			stopwordLanguages: ["eng"],
 		},
 		indexBatchSize: 50,

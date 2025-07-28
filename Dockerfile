@@ -14,8 +14,7 @@ RUN npm install
 COPY . .
 
 # Build the app
-ARG TINA_CLIENT_ID
-ARG TINA_TOKEN
+ENV NODE_ENV=production
 RUN npm run build
 
 # ---
@@ -29,7 +28,8 @@ WORKDIR /app
 # Copy built assets from the 'base' stage
 COPY --from=base /app/dist ./dist
 COPY --from=base /app/node_modules ./node_modules
-COPY package.json .
+COPY --from=base /app/package*.json ./
+COPY --from=base /app/astro.config.mjs ./
 
 # Expose the port the app runs on
 EXPOSE 4321
