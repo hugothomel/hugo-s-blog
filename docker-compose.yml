@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  blog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TINA_CLIENT_ID: ${TINA_CLIENT_ID}
+        TINA_TOKEN: ${TINA_TOKEN}
+    container_name: hugo-blog
+    ports:
+      - "4321:4321"
+    restart: unless-stopped 

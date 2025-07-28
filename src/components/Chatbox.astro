@@ -1,0 +1,120 @@
+<div id="chatbox">
+    <div id="chatbox-header" title="Click to toggle">
+        <span>Beaver Commands</span>
+        <button id="chatbox-toggle" aria-label="Toggle Chatbox">-</button>
+    </div>
+    <div id="chatbox-body">
+        <input type="text" id="chatbox-input" placeholder="e.g. build a dam" />
+        <button id="chatbox-send">Send</button>
+    </div>
+</div>
+
+<style>
+    #chatbox {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 300px;
+        max-width: calc(100vw - 40px);
+        background-color: var(--taupe);
+        border: var(--border-width) solid var(--border);
+        box-shadow: var(--shadow-offset-small) var(--border);
+        z-index: 10000;
+        transition: transform 0.3s ease-in-out, box-shadow 0.2s ease;
+        border-radius: 0;
+    }
+
+    body.dark-mode #chatbox {
+        background-color: var(--dark-taupe);
+    }
+
+    #chatbox.hidden {
+        transform: translateY(calc(100% - 45px));
+    }
+
+    #chatbox-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background-color: var(--mandarine);
+        border-bottom: var(--border-width) solid var(--border);
+        cursor: pointer;
+    }
+
+    #chatbox-header span {
+        font-weight: 700;
+        text-transform: uppercase;
+        color: var(--black);
+        font-size: 0.9rem;
+    }
+
+    #chatbox-toggle {
+        background: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        font-size: 1.5rem;
+        font-weight: 700;
+        cursor: pointer;
+        color: var(--black);
+        line-height: 1;
+    }
+
+    #chatbox-body {
+        padding: 1rem;
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    #chatbox-input {
+        flex-grow: 1;
+        min-width: 0;
+    }
+
+    #chatbox-send {
+        flex-shrink: 0;
+    }
+</style>
+
+<script is:inline>
+    const chatbox = document.getElementById('chatbox');
+    const toggleButton = document.getElementById('chatbox-toggle');
+    const header = document.getElementById('chatbox-header');
+    const input = document.getElementById('chatbox-input');
+    const sendButton = document.getElementById('chatbox-send');
+
+    function toggleChatbox(event) {
+        // Prevent toggling when clicking the button itself
+        if (event.target === toggleButton) return;
+        
+        chatbox.classList.toggle('hidden');
+        toggleButton.textContent = chatbox.classList.contains('hidden') ? '+' : '-';
+    }
+
+    header.addEventListener('click', toggleChatbox);
+    toggleButton.addEventListener('click', (e) => {
+        e.stopPropagation(); // stop it from propagating to the header
+        chatbox.classList.toggle('hidden');
+        toggleButton.textContent = chatbox.classList.contains('hidden') ? '+' : '-';
+    });
+
+    function sendCommand() {
+        const command = input.value.trim();
+        if (command) {
+            document.dispatchEvent(new CustomEvent('beaverCommand', { detail: command }));
+            input.value = '';
+        }
+    }
+
+    sendButton.addEventListener('click', sendCommand);
+    input.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            sendCommand();
+        }
+    });
+
+    // Start with chatbox hidden
+    chatbox.classList.add('hidden');
+    toggleButton.textContent = '+';
+</script> 
