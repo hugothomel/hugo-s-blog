@@ -6,6 +6,7 @@ import Footer from "../components/Footer.astro";
 import ColorScript from "../components/ColorScript.astro";
 import Tags from "../components/Tags.astro";
 import getTags from "../scripts/getTags";
+import Chatbox from "../components/Chatbox.astro";
 
 const posts = await getCollection("posts");
 const allTags = getTags(posts);
@@ -59,5 +60,6 @@ if (updated) {
 		<Tags tags={allTags} all />
 		<Footer />
 		<ColorScript />
+		<Chatbox />
 	</body>
 </html>
