@@ -1,0 +1,47 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ColorScript from "../components/ColorScript.astro";
+import WanderingBeaver from "../components/WanderingBeaver.astro";
+import Chatbox from "../components/Chatbox.astro";
+import EventMosaic from "../components/EventMosaic.astro";
+import { SITE_TITLE } from "../config";
+---
+
+<!doctype html>
+<html lang="en-us">
+	<BaseHead title={`Extra - ${SITE_TITLE}`} description="A collection of events, projects, and other extra things." />
+	<body>
+		<Header />
+		<main>
+			<!-- <div class="page-title">
+                <!-- <h1>Extra</h1> -->
+                <!-- <p>A collection of events, projects, and other things I'm proud of.</p> -->
+            <!-- </div> --> 
+			<EventMosaic />
+		</main>
+		<Footer />
+		<ColorScript />
+		<WanderingBeaver />
+		<Chatbox />
+	</body>
+</html>
+
+<style>
+    .page-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .page-title h1 {
+        text-shadow: 4px 4px 0px var(--mint);
+    }
+
+    .page-title p {
+        font-size: 1.2rem;
+        color: var(--gray);
+        max-width: 600px;
+        margin: 0.5rem auto 0;
+    }
+</style> 

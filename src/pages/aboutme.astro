@@ -1,0 +1,88 @@
+---
+import { getCollection } from "astro:content";
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import ColorScript from "../components/ColorScript.astro";
+import WanderingBeaver from "../components/WanderingBeaver.astro";
+import Chatbox from "../components/Chatbox.astro";
+import Timeline from "../components/Timeline.astro";
+
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+---
+
+<!doctype html>
+<html lang="en-us">
+	<BaseHead title={`About Me - ${SITE_TITLE}`} description="Creative Technologist bridging philosophy and AI entrepreneurship" />
+	<body>
+		<Header />
+		<main>
+			<Timeline />
+
+			<div class="contact-section">
+				<h3>Let's Connect</h3>
+				<p>
+					Interested in discussing AI, philosophy, or just want to chat about the future of technology? 
+					<a href="https://www.linkedin.com/in/hugo-hernández/" target="_blank">Connect with me on LinkedIn</a> 
+					or <a href="mailto:hugohl@hotmail.fr">send me an email</a>.
+				</p>
+				<p class="center">
+					You can also <a href="/rss.xml">subscribe with RSS</a> to stay updated with my latest thoughts!
+				</p>
+			</div>
+		</main>
+		<Footer />
+		<ColorScript />
+		<WanderingBeaver />
+		<Chatbox />
+	</body>
+</html>
+
+<style>
+	.contact-section {
+		background-color: var(--mint);
+		border: var(--border-width) solid var(--border);
+		box-shadow: var(--shadow-offset) var(--border);
+		padding: 2rem;
+		margin: 3rem 0;
+		text-align: center;
+	}
+
+	.contact-section h3 {
+		margin-top: 0;
+		color: var(--black);
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+
+	.contact-section p {
+		color: var(--black);
+		font-weight: 500;
+		margin-bottom: 1rem;
+	}
+
+	.contact-section a {
+		color: var(--black);
+		font-weight: 700;
+		text-decoration: underline;
+		text-decoration-thickness: 2px;
+		text-decoration-color: var(--mandarine);
+	}
+
+	.contact-section a:hover {
+		color: var(--mandarine);
+	}
+
+	.center {
+		text-align: center;
+	}
+
+	/* Dark mode adjustments */
+
+	/* Responsive */
+	@media (max-width: 600px) {
+		.contact-section {
+			padding: 1.5rem;
+		}
+	}
+</style>

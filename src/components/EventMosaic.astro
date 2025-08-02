@@ -1,0 +1,476 @@
+---
+interface Event {
+    title: string;
+    date: string;
+    location: string;
+    description: string;
+    images: string[];
+    link?: string;
+}
+
+const events: Event[] = [
+    {
+        title: "CeSia - Vendred'IA @ World Game",
+        date: "June 7, 2024",
+        location: "World Game Offices, Paris",
+        description: "Had the pleasure of presenting the GAMA (Guided Agents Mapping Architecture) framework to Effisciences and the Centre pour la Sécurité de l'IA at our World Game offices. GAMA represents months of research into making LLMs production-ready through multi-agent systems. The core insight: by splitting complex tasks across specialized agents coordinated by optimized routers, we transform the fundamental challenges of LLMs - from robustness to reliability, from transparency to explainability. We had deep discussions about AI safety, with participants particularly interested in how our approach using DSPy for router optimization and Autogen for agent creation could address real-world deployment challenges. Really enjoyed the technical depth of the questions - this crowd knew their stuff.",
+        images: ["/extra/cesia-1.jpeg"],
+    },
+    {
+        title: "AI Safety Meetup @ Station F",
+        date: "June 24, 2024",
+        location: "Station F, Paris",
+        description: "Delivered a talk on 'Robustness of Multi-Agent Systems' at Station F's AI Safety meetup, sharing the stage with brilliant minds from PRISM Eval, Meta/INRIA, and Télécom SudParis. My presentation focused on how GAMA's three-layer security approach (before, during, and after agent transitions) ensures system reliability even when individual components fail. The 70+ audience was particularly engaged around our trainset/valset methodology for router optimization and how we achieve 95%+ accuracy on simple queries while maintaining strong performance on subtle edge cases. Met some fascinating people working on complementary problems in model evaluation, watermarking, and adversarial robustness. Station F remains an incredible hub for the French AI community.",
+        images: ["/extra/StationF-1.png", "/extra/StationF-2.png"],
+    },
+    {
+        title: "Ship Fast Hackathon @ 42 Paris",
+        date: "November 2024",
+        location: "42 Paris",
+        description: "What an honor to jury and mentor at the Ship Fast hackathon! 130+ builders, 8 hours, €10K+ in prizes. The game has truly changed: with tools like Lovable and Windsurf, anyone can build - technical background or not. This shifts hackathons from 'can you code?' to 'what problem are you solving?' which is exactly where the focus should be. My morning mentoring sessions reflected this - the most valuable conversations weren't about implementation but about problem discovery. The winning teams understood this perfectly: AvoPoint solved real traffic ticket pain, Akrasia made procrastination expensive by putting money on the line. Witnessing the democratization of building firsthand was really something - it's no longer about flexing technical skills but finding problems worth solving. Thanks to the amazing organizers from 42 AI, Just Build It, and Unaite for having me!",
+        images: ["/extra/shipfast-1.png", "/extra/shipfast-2.png"],
+    },
+    {
+        title: "AI and Dissertation Techniques @ La Sorbonne",
+        date: "December 2, 2023",
+        location: "La Sorbonne",
+        description: "Invited to teach a workshop on 'AI and Dissertation Techniques' at Paris 3 - La Sorbonne, exploring how students can leverage AI tools while maintaining academic rigor. The session started with demystifying language models - explaining how these systems understand, interpret, and generate text through statistical patterns rather than true comprehension. We discussed AI's triple impact as a cultural revolution in our relationship with language, a technological acceleration, and an economic disruption.\nThe practical heart of the workshop involved students using ChatGPT to create dialogues between historical figures, then drafting dissertation introductions, plans, and conclusions on the topic 'AI and Art: Asset or Threat?' But I didn't sugarcoat the risks: we covered AI hallucinations, the danger of accepting mediocre AI-generated content, and the 'ouroboros effect' where AI trained on its own outputs degenerates.\nThe highlight was introducing Miria, an AI assistant we developed specifically for dissertation writing, trained on Paris 3's own methodology courses. Unlike general-purpose chatbots, Miria provides concise, methodology-focused feedback tailored to French academic standards. Watching students discover they could use AI as a thinking partner rather than a replacement for their own analysis was particularly rewarding. The workshop reinforced that AI is most powerful when it amplifies human critical thinking rather than replacing it.",
+        images: ["/extra/sorbonne-1.png"],
+    },
+    {
+        title: "EOcafe - Gamifying Data Annotation @ EARSC",
+        date: "March 12, 2021",
+        location: "EARSC",
+        description: "Presented at EARSC's EOcafe on how gaming can revolutionize data annotation for AI training. As CTO of World Game, I showcased our THANOS framework (Tool for Human Annotation and Normalized Observation Sequences), our game engine that transforms the tedious task of labeling training data into engaging mobile games.\nOur flagship example, Mission Earth, turned satellite image annotation into a fast-paced quiz game. Players analyze images, identify objects, and label data - generating thousands of high-quality annotations for machine learning models. The breakthrough: instead of paying crowdworkers on platforms like Amazon Mechanical Turk, players voluntarily annotate data when motivated by gameplay mechanics and leaderboards rather than monetary rewards.\nThe core insight I shared was how gamification solves one of AI's biggest bottlenecks - the need for massive amounts of labeled training data. With THANOS, we could deploy new datasets instantly, track annotation quality in real-time, and maintain player accuracy profiles across multiple games. By making data labeling fun, we achieved higher engagement, better quality control, and dramatically reduced costs compared to traditional annotation methods. It was fascinating to demonstrate how gaming psychology could accelerate AI development.",
+        images: ["/extra/EOcafe-1.jpeg"],
+    }
+];
+---
+
+<div class="mosaic" data-events={JSON.stringify(events)}>
+    {events.map((event, index) => (
+        <div class="card" data-index={index} role="button" tabindex="0" aria-label={`View details for ${event.title}`}>
+            <div class="card-inner">
+                <img src={event.images[0]} alt={event.title} loading="lazy" />
+                <div class="card-overlay">
+                    <div class="card-content">
+                        <h3 class="card-title">{
+                            (() => {
+                                const parts = event.title.split(' @ ');
+                                if (parts.length === 2) {
+                                    // If the first part is longer than 25 characters, don't force a break
+                                    if (parts[0].length > 25) {
+                                        return event.title;
+                                    } else {
+                                        return parts[0] + '\n@ ' + parts[1];
+                                    }
+                                }
+                                return event.title;
+                            })()
+                        }</h3>
+                        <p class="card-details">{event.date} &bull; {event.location}</p>
+                        <p class="card-description">{event.description}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    ))}
+</div>
+
+<!-- Modal -->
+<div id="mosaic-modal" class="modal-overlay" aria-hidden="true">
+    <div class="modal-container" role="dialog" aria-modal="true">
+        <button id="modal-close" class="modal-close" aria-label="Close modal">&times;</button>
+        <div class="modal-body">
+            <div class="modal-gallery">
+                <img id="modal-img" src="" alt="" />
+                <button id="modal-prev" class="gallery-nav prev" aria-label="Previous image">&lt;</button>
+                <button id="modal-next" class="gallery-nav next" aria-label="Next image">&gt;</button>
+                <div id="modal-counter" class="gallery-counter"></div>
+            </div>
+            <div class="modal-text-content">
+                <h2 id="modal-title"></h2>
+                <p id="modal-details"></p>
+                <p id="modal-description"></p>
+                <a id="modal-link" href="#" class="modal-link-button" target="_blank" rel="noopener noreferrer">View Event</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* --- Card & Mosaic Styles (condensed) --- */
+    .mosaic { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.5rem; }
+    .card { background-color: var(--taupe); border: var(--border-width) solid var(--border); box-shadow: var(--shadow-offset-small) var(--border); overflow: hidden; position: relative; transition: all 0.3s ease; cursor: pointer; }
+    .card:hover, .card:focus-visible { transform: translate(-4px, -4px); box-shadow: 8px 8px 0px var(--border); outline: none; }
+    .card-inner { width: 100%; height: 100%; display: block; position: relative; }
+    .card img { width: 100%; height: 250px; object-fit: cover; display: block; border: none; box-shadow: none; transition: transform 0.4s ease; }
+    .card:hover img { transform: scale(1.05); }
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.5rem;
+        color: var(--white);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 40%);
+        transition: all 0.4s ease-in-out;
+    }
+    .card:hover .card-overlay, .card:focus-visible .card-overlay {
+        justify-content: flex-start;
+        background: rgba(0, 0, 0, 0.8);
+    }
+    .card-content {
+        transition: all 0.4s ease-in-out;
+    }
+    .card-title { 
+        margin: 0 0 0.5rem 0; 
+        font-size: 1.3rem; 
+        font-weight: 700; 
+        line-height: 1.2; 
+        color: var(--white);
+        word-wrap: break-word;
+        hyphens: auto;
+        white-space: pre-line;
+    }
+    .card-details { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; opacity: 0.9; }
+    .card-description {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0;
+        overflow: hidden;
+        opacity: 0;
+        max-height: 0;
+        transition: opacity 0.3s ease-in-out 0.2s, max-height 0.4s ease-in-out 0.2s;
+    }
+    .card:hover .card-description, .card:focus-visible .card-description {
+        opacity: 1;
+        max-height: 100vh;
+    }
+    body.dark-mode .card { background-color: var(--dark-taupe); }
+
+    /* --- Modal Styles --- */
+    .modal-overlay { 
+        position: fixed; 
+        top: 0; 
+        left: 0; 
+        right: 0; 
+        bottom: 0; 
+        background: rgba(26, 26, 26, 0.95); 
+        z-index: 10000; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center; 
+        opacity: 0; 
+        visibility: hidden; 
+        transition: opacity 0.3s ease, visibility 0s 0.3s linear; 
+        padding: 2rem;
+    }
+    .modal-overlay.visible { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+    .modal-container { 
+        background-color: var(--taupe); 
+        border: var(--border-width) solid var(--border); 
+        box-shadow: var(--shadow-offset) var(--border); 
+        padding: 0; 
+        position: relative; 
+        max-width: 95vw; 
+        width: 1400px; 
+        max-height: 90vh; 
+        display: flex;
+        flex-direction: column;
+    }
+    body.dark-mode .modal-container { background-color: var(--dark-taupe); }
+    .modal-close { 
+        position: absolute; 
+        top: 1rem; 
+        right: 1.5rem; 
+        background: var(--mandarine); 
+        border: var(--border-width) solid var(--border); 
+        box-shadow: var(--shadow-offset-small) var(--border); 
+        padding: 0.5rem 1rem; 
+        font-size: 1.5rem; 
+        font-weight: 700; 
+        color: var(--black); 
+        cursor: pointer; 
+        line-height: 1; 
+        z-index: 10;
+        transition: all 0.2s ease;
+    }
+    .modal-close:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 4px 4px 0px var(--border);
+        background-color: var(--mint);
+    }
+    .modal-body { 
+        display: flex;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    /* Gallery takes up most of the space */
+    .modal-gallery { 
+        position: relative;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 0, 0, 0.1);
+        min-height: 500px;
+    }
+    
+    #modal-img { 
+        max-width: 100%;
+        max-height: 85vh;
+        height: auto;
+        object-fit: contain;
+        border: var(--border-width) solid var(--border);
+        box-shadow: var(--shadow-offset) var(--border);
+    }
+    
+    /* Text content in a sidebar */
+    .modal-text-content {
+        width: 400px;
+        padding: 2rem;
+        overflow-y: auto;
+        background-color: var(--white);
+        border-left: var(--border-width) solid var(--border);
+    }
+    
+    body.dark-mode .modal-text-content {
+        background-color: var(--dark-taupe);
+    }
+    
+    #modal-title { 
+        margin: 0 0 0.5rem; 
+        font-size: 1.8rem;
+        line-height: 1.2;
+        color: var(--black);
+    }
+    
+    body.dark-mode #modal-title {
+        color: var(--white);
+    }
+    
+    #modal-details { 
+        color: var(--gray); 
+        font-weight: 500; 
+        margin-bottom: 1.5rem;
+        font-size: 0.95rem;
+    }
+    #modal-description { 
+        line-height: 1.6; 
+        white-space: pre-wrap;
+        font-size: 0.95rem;
+        color: var(--black);
+    }
+    
+    body.dark-mode #modal-description {
+        color: var(--white);
+    }
+    .modal-link-button { 
+        background-color: var(--mint); 
+        color: var(--black) !important; 
+        border: var(--border-width) solid var(--border); 
+        box-shadow: var(--shadow-offset-small) var(--border); 
+        padding: 0.75rem 1.5rem; 
+        font-weight: 700; 
+        text-transform: uppercase; 
+        cursor: pointer; 
+        transition: all 0.2s ease; 
+        text-decoration: none; 
+        display: inline-block; 
+        margin-top: 1.5rem; 
+    }
+    .modal-link-button:hover { 
+        transform: translate(-3px, -3px); 
+        box-shadow: 6px 6px 0px var(--border); 
+        background-color: var(--mandarine); 
+    }
+    .modal-link-button.hidden { display: none; }
+    
+    /* --- Gallery Navigation --- */
+    .gallery-nav { 
+        position: absolute; 
+        top: 50%; 
+        transform: translateY(-50%); 
+        background-color: var(--white); 
+        color: var(--black); 
+        border: var(--border-width) solid var(--border); 
+        box-shadow: var(--shadow-offset-small) var(--border);
+        font-size: 1.5rem; 
+        font-weight: 700;
+        cursor: pointer; 
+        padding: 1rem 1.25rem; 
+        z-index: 1; 
+        transition: all 0.2s ease; 
+    }
+    .gallery-nav:hover { 
+        transform: translateY(-50%) translate(-3px, -3px);
+        box-shadow: 6px 6px 0px var(--border);
+        background-color: var(--mint);
+    }
+    .gallery-nav.prev { left: 20px; }
+    .gallery-nav.next { right: 20px; }
+    .gallery-nav.hidden { display: none; }
+    .gallery-counter { 
+        position: absolute; 
+        bottom: 20px; 
+        left: 50%; 
+        transform: translateX(-50%); 
+        background-color: var(--white); 
+        color: var(--black); 
+        padding: 0.5rem 1rem; 
+        font-size: 0.9rem; 
+        font-weight: 600;
+        border: var(--border-width) solid var(--border);
+        box-shadow: var(--shadow-offset-small) var(--border);
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 1000px) {
+        .modal-body { 
+            flex-direction: column;
+        }
+        .modal-text-content {
+            width: 100%;
+            max-height: 300px;
+            border-left: none;
+            border-top: var(--border-width) solid var(--border);
+        }
+        .modal-gallery {
+            min-height: 400px;
+        }
+        #modal-img {
+            max-height: 60vh;
+        }
+    }
+    
+    @media (max-width: 600px) {
+        .modal-overlay {
+            padding: 1rem;
+        }
+        .modal-container { 
+            max-width: 100%;
+        }
+        .modal-text-content {
+            padding: 1.5rem;
+        }
+        #modal-title { 
+            font-size: 1.4rem; 
+        }
+        .gallery-nav {
+            padding: 0.75rem 1rem;
+            font-size: 1.2rem;
+        }
+        .gallery-nav.prev { left: 10px; }
+        .gallery-nav.next { right: 10px; }
+    }
+</style>
+
+<script is:inline>
+document.addEventListener('DOMContentLoaded', () => {
+    const mosaic = document.querySelector('.mosaic');
+    if (!mosaic) return;
+
+    const eventsData = mosaic.dataset.events;
+    if (!eventsData) return;
+
+    const events = JSON.parse(eventsData);
+    let currentImageIndex = 0;
+    let currentEvent = null;
+
+    const modal = document.getElementById('mosaic-modal');
+    const modalClose = document.getElementById('modal-close');
+    const modalImg = document.getElementById('modal-img');
+    const modalTitle = document.getElementById('modal-title');
+    const modalDetails = document.getElementById('modal-details');
+    const modalDescription = document.getElementById('modal-description');
+    const modalLink = document.getElementById('modal-link');
+    const modalPrev = document.getElementById('modal-prev');
+    const modalNext = document.getElementById('modal-next');
+    const modalCounter = document.getElementById('modal-counter');
+
+    if (!modal || !modalClose || !modalImg || !modalTitle || !modalDetails || !modalDescription || !modalLink || !modalPrev || !modalNext || !modalCounter) {
+        console.error('Modal element(s) not found');
+        return;
+    }
+
+    let lastFocusedElement = null;
+
+    function updateGallery() {
+        if (!currentEvent) return;
+        modalImg.src = currentEvent.images[currentImageIndex];
+        modalPrev.classList.toggle('hidden', currentEvent.images.length <= 1);
+        modalNext.classList.toggle('hidden', currentEvent.images.length <= 1);
+        modalCounter.classList.toggle('hidden', currentEvent.images.length <= 1);
+        modalCounter.textContent = `${currentImageIndex + 1} / ${currentEvent.images.length}`;
+    }
+
+    function openModal(index) {
+        lastFocusedElement = document.activeElement;
+        currentEvent = events[index];
+        currentImageIndex = 0;
+
+        modalTitle.textContent = currentEvent.title;
+        modalDetails.textContent = `${currentEvent.date} • ${currentEvent.location}`;
+        modalDescription.textContent = currentEvent.description;
+        
+        if (currentEvent.link) {
+            modalLink.href = currentEvent.link;
+            modalLink.classList.remove('hidden');
+        } else {
+            modalLink.classList.add('hidden');
+        }
+        
+        updateGallery();
+        
+        modal.classList.add('visible');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        modalClose.focus();
+    }
+
+    function closeModal() {
+        modal.classList.remove('visible');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocusedElement) {
+            lastFocusedElement.focus();
+        }
+    }
+
+    document.querySelectorAll('.mosaic .card').forEach((card, index) => {
+        card.addEventListener('click', () => openModal(index));
+        card.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                openModal(index);
+            }
+        });
+    });
+
+    modalPrev.addEventListener('click', () => {
+        if (!currentEvent) return;
+        currentImageIndex = (currentImageIndex - 1 + currentEvent.images.length) % currentEvent.images.length;
+        updateGallery();
+    });
+
+    modalNext.addEventListener('click', () => {
+        if (!currentEvent) return;
+        currentImageIndex = (currentImageIndex + 1) % currentEvent.images.length;
+        updateGallery();
+    });
+    
+    modalClose.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('visible')) closeModal();
+    });
+});
+</script> 

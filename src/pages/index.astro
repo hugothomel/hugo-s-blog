@@ -10,6 +10,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
 import { Content as About } from "./about.md";
 import getTags from "../scripts/getTags";
 import WanderingBeaver from "../components/WanderingBeaver.astro";
+import Chatbox from "../components/Chatbox.astro";
 
 const posts = await getCollection("posts");
 const tags = getTags(posts);
@@ -41,5 +42,6 @@ const tags = getTags(posts);
 		<Footer />
 		<ColorScript />
 		<WanderingBeaver />
+		<Chatbox />
 	</body>
 </html>

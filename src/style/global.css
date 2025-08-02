@@ -446,6 +446,19 @@ body.dark-mode code {
 	color: var(--white);
 }
 
+body.dark-mode .modal-container {
+    background-color: var(--dark-taupe);
+}
+
+/* Neubrutalist modal adjustments */
+.modal-container {
+    border-radius: 0;
+}
+
+.modal-close:hover {
+    color: var(--mandarine);
+}
+
 /* Responsive */
 @media (max-width: 600px) {
 	nav {

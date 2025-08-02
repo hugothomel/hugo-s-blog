@@ -36,6 +36,7 @@
             swim:      { y: -224, frames: 4, duration: 0.6 },
             idleWater: { y: -192, frames: 4, duration: 0.8 },
             ascent:    { y: -320, frames: 4, duration: 0.5 },
+            build:     { y: -96,  frames: 4, duration: 0.5 }, // New build animation
         };
 
         let currentState = '';
@@ -43,6 +44,7 @@
 		let xSpeed = 1;
 		let directionX = 1;
         let introDone = false;
+        let isBuilding = false; // New state for building
 
         function setAnimation(name) {
             const anim = animations[name];
@@ -66,6 +68,7 @@
 
             // After ascent animation, start swimming out
             setTimeout(() => {
+                if (isBuilding) return; // Don't interrupt building
                 setAnimation('swim');
                 xSpeed = 2;
                 directionX = 1;
@@ -83,7 +86,7 @@
                 resetBeaver();
                 frameLoop(); // Start main random loop
             } else {
-                requestAnimationFrame(introSwimLoop);
+                if (!isBuilding) requestAnimationFrame(introSwimLoop);
             }
         }
 
@@ -111,18 +114,18 @@
 			x += xSpeed * directionX;
 
             if ((directionX === 1 && x > viewportWidth) || (directionX === -1 && x < -beaverWidth)) {
-                resetBeaver();
+                if (!isBuilding) resetBeaver();
             }
 			
 			beaver.style.transform = directionX === 1 ? 'scale(2)' : 'scale(2) scaleX(-1)';
 			beaver.style.left = `${x}px`;
 
-			requestAnimationFrame(frameLoop);
+			if (!isBuilding) requestAnimationFrame(frameLoop);
 		}
 
         // --- Scroll Logic ---
         function handleScroll() {
-            if (!introDone) return; // Don't interfere with intro
+            if (!introDone || isBuilding) return; // Don't interfere with intro or building
 
             const viewportHeight = window.innerHeight;
             const isScrolled = window.scrollY > viewportHeight / 2;
@@ -138,6 +141,35 @@
         window.addEventListener('scroll', () => {
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(handleScroll, 100);
+        });
+
+        // --- Command Logic ---
+        document.addEventListener('beaverCommand', (e) => {
+            const command = e.detail.toLowerCase();
+
+            if (command === 'build a dam') {
+                isBuilding = true;
+                setAnimation('build');
+                // Stop moving
+                setTimeout(() => {
+                    isBuilding = false;
+                    resetBeaver();
+                    frameLoop();
+                }, 2000); // Build for 2 seconds
+            } else if (command.startsWith('go open post')) {
+                const postSlug = command.replace('go open post', '').trim();
+                if (postSlug) {
+                    window.location.href = `/post/${postSlug}`;
+                }
+            } else if (command === 'stop') {
+                isBuilding = true; // A way to pause it
+            } else if (command === 'go') {
+                if (isBuilding) {
+                    isBuilding = false;
+                    resetBeaver();
+                    frameLoop();
+                }
+            }
         });
 
         // --- Initialization ---

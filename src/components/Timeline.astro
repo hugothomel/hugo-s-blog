@@ -1,0 +1,373 @@
+---
+const timelineData = [
+    {
+        id: 'koine',
+        period: 'Nov 2024 – Jul 2025',
+        title: 'AI-Powered Digital Prototyping Platform',
+        subtitle: 'KOÏNÈ, Paris - Founder & CEO',
+        category: 'work',
+        details: `• End-to-end development of AI platform transforming natural language briefs into functional web applications using Next.js, React, Supabase with real-time collaboration, Figma integration, and MCP servers
+        • Multi-agents system with custom LLM orchestration (Claude, Gemini, Cerebras, Groq, OpenAI) implementing advanced reasoning loops, guardrails, and context-aware code generation (100k+ tokens/session)
+        • Validated PMF with 50+ French PMs — strategic shutdown when Figma's native AI launch closed opportunity`
+    },
+    {
+        id: 'sorbonne',
+        period: 'Sep 2021 – present',
+        title: 'Visiting Professor',
+        subtitle: 'Sorbonne University, Paris',
+        category: 'work',
+        details: 'Conducted a series of conferences on the disruptive potential of NFTs as visual assets in the contemporary art market. Designed and taught undergraduate courses on critical perspective in the information age through analysis of classical references in pop-culture material.'
+    },
+    {
+        id: 'world-game',
+        period: 'Dec 2019 – Jul 2025',
+        title: 'Impact Games Studio Cofounder',
+        subtitle: 'World Game, Paris - "Play the real"',
+        category: 'work',
+        details: `COO & Head of Research (01/24 - 07/25) | CTO (12/19 - 01/24)
+        • Led executive operations across technology, product, and business development while establishing dedicated R&D department
+        • Raised €3M in total funding: €1.5M seed (2020) and €1.5M (Summer 2024)
+        • Grew company from 3 to 15 employees over 4 years, building cross-functional teams, achieved 1M€ ARR
+        • AI R&D Project Leadership:
+          ◦ Led development of two major research projects securing €861,716 in government grants (total projects value: €1,809,168)
+          ◦ T.H.A.N.O.S Software (2021): I-Nov contest winner - platform for gamification of data annotation
+          ◦ Autorecettage (2024): Innov'up Leader PIA - agentic system automating QA testing
+          ◦ GAMA Framework (2023-24): open multi-agents framework with SOTA performance in robustness and transparency`
+    },
+    {
+        id: 'hec-studies',
+        period: '2019 – 2020',
+        title: 'MSc Sustainability and Social Innovation',
+        subtitle: 'HEC Paris',
+        category: 'education',
+        details: 'Thesis "Nudges and Gamification: Outlining new paths for behavioural impact scaling" — developed a framework for translating cognitive biases and decision heuristics into scalable digital interventions using predictive modeling and adaptive feedback mechanisms. Honors: Summa cum laude.'
+    },
+    {
+        id: 'artimon',
+        period: 'Mar – Aug 2019',
+        title: 'Analyst – Research and Innovation',
+        subtitle: 'Artimon Consulting, Paris',
+        category: 'work',
+        details: 'Conducted the assessment of several startups in the perspective of potential partnerships. Performed an extensive benchmark on Artificial Intelligence solutions for Human Resources.'
+    },
+    {
+        id: 'ma-studies',
+        period: '2016 – 2019',
+        title: 'M.A. Philosophy of Science',
+        subtitle: 'École Normale Supérieure – Paris',
+        category: 'education',
+        details: 'Thesis "Cartesian mechanical thought as a radical innovation tool: homological study of a few cognitive functions assignable to both men and machines" — defended the idea that roadblocks in the development of advanced AI systems should be traced back to early postulates regarding our conception of the mind. Honors: Summa cum laude.'
+    },
+    {
+        id: 'ba-studies',
+        period: '2013 – 2015',
+        title: 'B.A. Cultural and Political Studies',
+        subtitle: 'Sorbonne University / University of British Columbia',
+        category: 'education',
+        details: 'Thesis "Decisions modelling in time of crisis: Brexit as a node in European historiography" — explored sociopolitical environments as dynamic systems with internal state representations, feedback loops, and predictive mechanisms for anticipating critical transitions—early theoretical work parallel to world model architectures. Honors: Summa cum laude.'
+    }
+];
+---
+
+<div class="timeline-container">
+    <div class="timeline">
+        {timelineData.map((item) => (
+            <div class="timeline-item" data-category={item.category}>
+                <div class="timeline-marker">
+                    <div class={`timeline-dot ${item.category}`}></div>
+                    <div class="timeline-line"></div>
+                </div>
+                
+                <div class="timeline-content">
+                    <div class="timeline-card" data-timeline-id={item.id}>
+                        <div class="timeline-header-content">
+                            <span class="timeline-period">{item.period}</span>
+                            <h3 class="timeline-title">{item.title}</h3>
+                            <p class="timeline-subtitle">{item.subtitle}</p>
+                            <button class="timeline-expand" aria-label="Expand details">+</button>
+                        </div>
+                        
+                        <div class="timeline-details">
+                            <div class="timeline-details-content">
+                                {item.details.split('\n').map((line) => (
+                                    <p set:html={line.trim()} />
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        ))}
+    </div>
+    
+    <div class="timeline-footer">
+        <div class="timeline-legend">
+            <div class="legend-item">
+                <div class="timeline-dot education"></div>
+                <span>Education</span>
+            </div>
+            <div class="legend-item">
+                <div class="timeline-dot work"></div>
+                <span>Professional Experience</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .timeline-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    
+    .timeline {
+        position: relative;
+        padding-left: 2rem;
+        overflow: hidden;
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 2rem;
+        display: flex;
+        align-items: stretch;
+        overflow: visible;
+    }
+    
+    .timeline-marker {
+        position: relative;
+        flex-shrink: 0;
+        margin-right: 2rem;
+        display: flex;
+        align-items: center;
+        min-height: 100%;
+    }
+    
+    .timeline-dot {
+        width: 20px;
+        height: 20px;
+        border: var(--border-width) solid var(--border);
+        border-radius: 50%;
+        background-color: var(--white);
+        z-index: 2;
+        position: relative;
+    }
+    
+    .timeline-dot.education {
+        background-color: var(--mint);
+    }
+    
+    .timeline-dot.work {
+        background-color: var(--mandarine);
+    }
+    
+    .timeline-line {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 3px;
+        height: 1000px;
+        background-color: var(--border);
+        transform: translateX(-50%);
+        z-index: 1;
+        pointer-events: none;
+    }
+    
+    .timeline-item:last-child .timeline-line {
+        display: none;
+    }
+    
+    .timeline-content {
+        flex: 1;
+        min-width: 0;
+    }
+    
+    .timeline-card {
+        background-color: var(--taupe);
+        border: var(--border-width) solid var(--border);
+        box-shadow: var(--shadow-offset-small) var(--border);
+        transition: all 0.3s ease;
+        position: relative;
+    }
+    
+    .timeline-card:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0px var(--border);
+    }
+    
+    .timeline-header-content {
+        padding: 1.5rem;
+        position: relative;
+    }
+    
+    .timeline-period {
+        display: inline-block;
+        background-color: var(--mint);
+        color: var(--black);
+        padding: 0.3rem 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        border: 2px solid var(--border);
+        box-shadow: var(--shadow-offset-small) var(--border);
+        margin-bottom: 1rem;
+    }
+    
+    .timeline-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: var(--text);
+        line-height: 1.3;
+    }
+    
+    .timeline-subtitle {
+        margin: 0;
+        color: var(--gray);
+        font-weight: 500;
+        font-size: 1rem;
+    }
+    
+    .timeline-expand {
+        position: absolute;
+        top: 1.5rem;
+        right: 1.5rem;
+        width: 32px;
+        height: 32px;
+        background-color: var(--mandarine);
+        border: 2px solid var(--border);
+        box-shadow: var(--shadow-offset-small) var(--border);
+        color: var(--black);
+        font-size: 1.2rem;
+        font-weight: 700;
+        line-height: 1;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .timeline-expand:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 4px 4px 0px var(--border);
+        background-color: var(--mint);
+    }
+    
+    .timeline-details {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+        border-top: 0px solid var(--border);
+    }
+    
+    .timeline-details.expanded {
+        max-height: 1000px;
+        border-top: var(--border-width) solid var(--border);
+    }
+    
+    .timeline-details-content {
+        padding: 1.5rem;
+    }
+    
+    .timeline-details-content p {
+        margin: 0 0 1rem 0;
+        line-height: 1.6;
+        color: var(--text);
+    }
+    
+    .timeline-details-content p:last-child {
+        margin-bottom: 0;
+    }
+    
+    .timeline-footer {
+        margin-top: 3rem;
+        padding-top: 2rem;
+        border-top: var(--border-width) solid var(--border);
+    }
+    
+    .timeline-legend {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+    }
+    
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        color: var(--text);
+    }
+    
+    .legend-item .timeline-dot {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+    }
+    
+    /* Dark mode adjustments */
+    body.dark-mode .timeline-card {
+        background-color: var(--dark-taupe);
+    }
+    
+    /* Responsive */
+    @media (max-width: 600px) {
+        .timeline-container {
+            padding: 0 0.5rem;
+        }
+        
+        .timeline {
+            padding-left: 1rem;
+        }
+        
+        .timeline-marker {
+            margin-right: 1rem;
+        }
+        
+        .timeline-header-content {
+            padding: 1rem;
+        }
+        
+        .timeline-expand {
+            top: 1rem;
+            right: 1rem;
+        }
+        
+        .timeline-details-content {
+            padding: 1rem;
+        }
+        
+        .timeline-legend {
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+    }
+</style>
+
+<script>
+    // Timeline expansion functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const expandButtons = document.querySelectorAll('.timeline-expand');
+        
+        expandButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const card = this.closest('.timeline-card');
+                const details = card.querySelector('.timeline-details');
+                const isExpanded = details.classList.contains('expanded');
+                
+                if (isExpanded) {
+                    details.classList.remove('expanded');
+                    this.textContent = '+';
+                    this.setAttribute('aria-label', 'Expand details');
+                } else {
+                    details.classList.add('expanded');
+                    this.textContent = '−';
+                    this.setAttribute('aria-label', 'Collapse details');
+                }
+            });
+        });
+    });
+</script> 
