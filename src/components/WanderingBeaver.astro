@@ -17,6 +17,23 @@
 		animation: move-sprite var(--animation-duration) steps(var(--animation-frames)) infinite;
         transition: top 1s ease-in-out;
 	}
+	
+	/* Mobile adjustments */
+	@media (max-width: 600px) {
+		#beaver {
+			transform: scale(1.5);
+			width: 24px;
+			height: 24px;
+		}
+	}
+	
+	@media (max-width: 380px) {
+		#beaver {
+			transform: scale(1.2);
+			width: 20px;
+			height: 20px;
+		}
+	}
 </style>
 
 <style is:global>

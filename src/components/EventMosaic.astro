@@ -351,6 +351,43 @@ const events: Event[] = [
     }
     
     @media (max-width: 600px) {
+        /* Grid adjustments for mobile */
+        .mosaic {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .card {
+            box-shadow: 2px 2px 0px var(--border);
+        }
+        
+        .card:hover, .card:focus-visible {
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0px var(--border);
+        }
+        
+        .card img {
+            height: 200px;
+        }
+        
+        .card-overlay {
+            padding: 1rem;
+        }
+        
+        .card-title {
+            font-size: 1.1rem;
+            text-shadow: 2px 2px 0px var(--black);
+        }
+        
+        .card-details {
+            font-size: 0.8rem;
+        }
+        
+        .card-description {
+            font-size: 0.9rem;
+        }
+        
+        /* Modal adjustments */
         .modal-overlay {
             padding: 1rem;
         }
