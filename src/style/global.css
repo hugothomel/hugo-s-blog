@@ -529,11 +529,43 @@ body.dark-mode .modal-container {
 	/* Post list adjustments */
 	.post {
 		padding: 1rem;
-		margin-bottom: 1rem;
+		margin-bottom: 0.75rem;
 	}
 	
 	.post .title {
+		font-size: 0.95rem;
+	}
+	
+	.post .excerpt {
+		font-size: 0.85rem;
+		line-height: 1.4;
+	}
+	
+	.post time {
+		font-size: 0.8rem;
+	}
+	
+	/* Tag scaling for mobile */
+	.tag {
+		font-size: 0.75rem;
+		padding: 0.25rem 0.6rem;
+		box-shadow: 2px 2px 0px var(--border);
+	}
+	
+	.tag:hover {
+		transform: translate(-1px, -1px);
+		box-shadow: 3px 3px 0px var(--border);
+	}
+	
+	/* Section headings scaling */
+	h3 {
 		font-size: 1.1rem;
+	}
+	
+	/* General paragraph scaling */
+	p {
+		font-size: 0.9rem;
+		line-height: 1.5;
 	}
 	
 	/* Reduce shadows and borders for cleaner mobile look */
@@ -574,5 +606,37 @@ body.dark-mode .modal-container {
 	nav a {
 		font-size: 0.55rem;
 		padding: 0.25rem 0.15rem;
+	}
+	
+	/* Even more aggressive content scaling for very small screens */
+	.post .title {
+		font-size: 0.85rem;
+	}
+	
+	.post .excerpt {
+		font-size: 0.8rem;
+	}
+	
+	.post time {
+		font-size: 0.75rem;
+	}
+	
+	.tag {
+		font-size: 0.7rem;
+		padding: 0.2rem 0.5rem;
+	}
+	
+	h3 {
+		font-size: 1rem;
+	}
+	
+	p {
+		font-size: 0.85rem;
+		line-height: 1.4;
+	}
+	
+	.post {
+		padding: 0.75rem;
+		margin-bottom: 0.5rem;
 	}
 }
