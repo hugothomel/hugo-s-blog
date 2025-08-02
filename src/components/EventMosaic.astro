@@ -31,9 +31,9 @@ const events: Event[] = [
         images: ["/extra/shipfast-1.png", "/extra/shipfast-2.png"],
     },
     {
-        title: "AI and Dissertation Techniques @ Paris 3 - La Sorbonne",
+        title: "AI and Dissertation Techniques @ La Sorbonne",
         date: "December 2, 2023",
-        location: "Paris 3 - La Sorbonne",
+        location: "La Sorbonne",
         description: "Invited to teach a workshop on 'AI and Dissertation Techniques' at Paris 3 - La Sorbonne, exploring how students can leverage AI tools while maintaining academic rigor. The session started with demystifying language models - explaining how these systems understand, interpret, and generate text through statistical patterns rather than true comprehension. We discussed AI's triple impact as a cultural revolution in our relationship with language, a technological acceleration, and an economic disruption.\nThe practical heart of the workshop involved students using ChatGPT to create dialogues between historical figures, then drafting dissertation introductions, plans, and conclusions on the topic 'AI and Art: Asset or Threat?' But I didn't sugarcoat the risks: we covered AI hallucinations, the danger of accepting mediocre AI-generated content, and the 'ouroboros effect' where AI trained on its own outputs degenerates.\nThe highlight was introducing Miria, an AI assistant we developed specifically for dissertation writing, trained on Paris 3's own methodology courses. Unlike general-purpose chatbots, Miria provides concise, methodology-focused feedback tailored to French academic standards. Watching students discover they could use AI as a thinking partner rather than a replacement for their own analysis was particularly rewarding. The workshop reinforced that AI is most powerful when it amplifies human critical thinking rather than replacing it.",
         images: ["/extra/sorbonne-1.png"],
     },
@@ -54,7 +54,20 @@ const events: Event[] = [
                 <img src={event.images[0]} alt={event.title} loading="lazy" />
                 <div class="card-overlay">
                     <div class="card-content">
-                        <h3 class="card-title">{event.title}</h3>
+                        <h3 class="card-title">{
+                            (() => {
+                                const parts = event.title.split(' @ ');
+                                if (parts.length === 2) {
+                                    // If the first part is longer than 25 characters, don't force a break
+                                    if (parts[0].length > 25) {
+                                        return event.title;
+                                    } else {
+                                        return parts[0] + '\n@ ' + parts[1];
+                                    }
+                                }
+                                return event.title;
+                            })()
+                        }</h3>
                         <p class="card-details">{event.date} &bull; {event.location}</p>
                         <p class="card-description">{event.description}</p>
                     </div>
@@ -96,7 +109,16 @@ const events: Event[] = [
     .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 3rem 1.5rem 1.5rem; color: var(--white); }
     .card-content { transform: translateY(calc(100% - 60px)); transition: transform 0.4s ease; }
     .card:hover .card-content, .card:focus-visible .card-content { transform: translateY(0); }
-    .card-title { margin: 0 0 0.5rem 0; font-size: 1.3rem; font-weight: 700; line-height: 1.2; color: var(--white); }
+    .card-title { 
+        margin: 0 0 0.5rem 0; 
+        font-size: 1.3rem; 
+        font-weight: 700; 
+        line-height: 1.2; 
+        color: var(--white);
+        word-wrap: break-word;
+        hyphens: auto;
+        white-space: pre-line;
+    }
     .card-details { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; opacity: 0.9; }
     .card-description { font-size: 1rem; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
     .card:hover .card-description, .card:focus-visible .card-description { display: block; }
