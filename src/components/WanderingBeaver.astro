@@ -22,16 +22,12 @@
 	@media (max-width: 600px) {
 		#beaver {
 			transform: scale(1.5);
-			width: 24px;
-			height: 24px;
 		}
 	}
 	
 	@media (max-width: 380px) {
 		#beaver {
 			transform: scale(1.2);
-			width: 20px;
-			height: 20px;
 		}
 	}
 </style>
@@ -75,9 +71,15 @@
 
         // --- Intro Logic ---
         function runIntro() {
-            // Position near where the header would be
-            x = 100;
-            y = 150; // pixels from top
+            // Position near where the header would be, accounting for mobile scaling
+            const isMobile = window.innerWidth <= 600;
+            const isSmallMobile = window.innerWidth <= 380;
+            
+            // Adjust positioning based on screen size and scaling
+            const padding = isSmallMobile ? 60 : isMobile ? 80 : 100;
+            
+            x = padding;
+            y = Math.max(padding, 150); // Ensure minimum distance from top
             beaver.style.left = `${x}px`;
             beaver.style.top = `${y}px`;
 
@@ -111,12 +113,18 @@
         function resetBeaver() {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
+            const isMobile = window.innerWidth <= 600;
+            const isSmallMobile = window.innerWidth <= 380;
+            
+            // Adjust padding based on screen size and scaling
+            const padding = isSmallMobile ? 60 : isMobile ? 80 : 100;
             
             directionX = Math.random() < 0.5 ? 1 : -1;
             xSpeed = Math.random() * 1.5 + 0.5;
             
             x = directionX === 1 ? -64 : viewportWidth;
-            y = Math.random() * (viewportHeight - 100);
+            // Ensure beaver stays within safe bounds vertically
+            y = Math.random() * (viewportHeight - padding * 2) + padding;
             
             beaver.style.top = `${y}px`;
 
