@@ -10,11 +10,11 @@ interface Event {
 
 const events: Event[] = [
     {
-        title: "CeSia - Vendred'IA @ World Game",
-        date: "June 7, 2024",
-        location: "World Game Offices, Paris",
-        description: "Had the pleasure of presenting the GAMA (Guided Agents Mapping Architecture) framework to Effisciences and the Centre pour la Sécurité de l'IA at our World Game offices. GAMA represents months of research into making LLMs production-ready through multi-agent systems. The core insight: by splitting complex tasks across specialized agents coordinated by optimized routers, we transform the fundamental challenges of LLMs - from robustness to reliability, from transparency to explainability. We had deep discussions about AI safety, with participants particularly interested in how our approach using DSPy for router optimization and Autogen for agent creation could address real-world deployment challenges. Really enjoyed the technical depth of the questions - this crowd knew their stuff.",
-        images: ["/extra/cesia-1.jpeg"],
+        title: "Ship Fast Hackathon @ 42 Paris",
+        date: "July 2025",
+        location: "42 Paris",
+        description: "What an honor to jury and mentor at the Ship Fast hackathon! 130+ builders, 8 hours, €10K+ in prizes. The game has truly changed: with tools like Lovable and Windsurf, anyone can build - technical background or not. This shifts hackathons from 'can you code?' to 'what problem are you solving?' which is exactly where the focus should be. My morning mentoring sessions reflected this - the most valuable conversations weren't about implementation but about problem discovery. The winning teams understood this perfectly: AvoPoint solved real traffic ticket pain, Akrasia made procrastination expensive by putting money on the line. Witnessing the democratization of building firsthand was really something - it's no longer about flexing technical skills but finding problems worth solving. Thanks to the amazing organizers from 42 AI, Just Build It, and Unaite for having me!",
+        images: ["/extra/shipfast-1.png", "/extra/shipfast-2.png"],
     },
     {
         title: "AI Safety Meetup @ Station F",
@@ -24,21 +24,21 @@ const events: Event[] = [
         images: ["/extra/StationF-1.png", "/extra/StationF-2.png"],
     },
     {
-        title: "Ship Fast Hackathon @ 42 Paris",
-        date: "November 2024",
-        location: "42 Paris",
-        description: "What an honor to jury and mentor at the Ship Fast hackathon! 130+ builders, 8 hours, €10K+ in prizes. The game has truly changed: with tools like Lovable and Windsurf, anyone can build - technical background or not. This shifts hackathons from 'can you code?' to 'what problem are you solving?' which is exactly where the focus should be. My morning mentoring sessions reflected this - the most valuable conversations weren't about implementation but about problem discovery. The winning teams understood this perfectly: AvoPoint solved real traffic ticket pain, Akrasia made procrastination expensive by putting money on the line. Witnessing the democratization of building firsthand was really something - it's no longer about flexing technical skills but finding problems worth solving. Thanks to the amazing organizers from 42 AI, Just Build It, and Unaite for having me!",
-        images: ["/extra/shipfast-1.png", "/extra/shipfast-2.png"],
+        title: "CeSia - Vendred'IA @ World Game",
+        date: "June 7, 2024",
+        location: "World Game Offices, Paris",
+        description: "Had the pleasure of presenting the GAMA (Guided Agents Mapping Architecture) framework to Effisciences and the Centre pour la Sécurité de l'IA at our World Game offices. GAMA represents months of research into making LLMs production-ready through multi-agent systems. The core insight: by splitting complex tasks across specialized agents coordinated by optimized routers, we transform the fundamental challenges of LLMs - from robustness to reliability, from transparency to explainability. We had deep discussions about AI safety, with participants particularly interested in how our approach using DSPy for router optimization and Autogen for agent creation could address real-world deployment challenges. Really enjoyed the technical depth of the questions - this crowd knew their stuff.",
+        images: ["/extra/cesia-1.jpeg"],
     },
     {
-        title: "AI and Dissertation Techniques @ La Sorbonne",
+        title: "AI and Dissertation Techniques @ Paris 3 - La Sorbonne",
         date: "December 2, 2023",
-        location: "La Sorbonne",
+        location: "Paris 3 - La Sorbonne",
         description: "Invited to teach a workshop on 'AI and Dissertation Techniques' at Paris 3 - La Sorbonne, exploring how students can leverage AI tools while maintaining academic rigor. The session started with demystifying language models - explaining how these systems understand, interpret, and generate text through statistical patterns rather than true comprehension. We discussed AI's triple impact as a cultural revolution in our relationship with language, a technological acceleration, and an economic disruption.\nThe practical heart of the workshop involved students using ChatGPT to create dialogues between historical figures, then drafting dissertation introductions, plans, and conclusions on the topic 'AI and Art: Asset or Threat?' But I didn't sugarcoat the risks: we covered AI hallucinations, the danger of accepting mediocre AI-generated content, and the 'ouroboros effect' where AI trained on its own outputs degenerates.\nThe highlight was introducing Miria, an AI assistant we developed specifically for dissertation writing, trained on Paris 3's own methodology courses. Unlike general-purpose chatbots, Miria provides concise, methodology-focused feedback tailored to French academic standards. Watching students discover they could use AI as a thinking partner rather than a replacement for their own analysis was particularly rewarding. The workshop reinforced that AI is most powerful when it amplifies human critical thinking rather than replacing it.",
         images: ["/extra/sorbonne-1.png"],
     },
     {
-        title: "EOcafe - Gamifying Data Annotation @ EARSC",
+        title: "EOcafe - Gamifying Data Annotation for AI @ EARSC",
         date: "March 12, 2021",
         location: "EARSC",
         description: "Presented at EARSC's EOcafe on how gaming can revolutionize data annotation for AI training. As CTO of World Game, I showcased our THANOS framework (Tool for Human Annotation and Normalized Observation Sequences), our game engine that transforms the tedious task of labeling training data into engaging mobile games.\nOur flagship example, Mission Earth, turned satellite image annotation into a fast-paced quiz game. Players analyze images, identify objects, and label data - generating thousands of high-quality annotations for machine learning models. The breakthrough: instead of paying crowdworkers on platforms like Amazon Mechanical Turk, players voluntarily annotate data when motivated by gameplay mechanics and leaderboards rather than monetary rewards.\nThe core insight I shared was how gamification solves one of AI's biggest bottlenecks - the need for massive amounts of labeled training data. With THANOS, we could deploy new datasets instantly, track annotation quality in real-time, and maintain player accuracy profiles across multiple games. By making data labeling fun, we achieved higher engagement, better quality control, and dramatically reduced costs compared to traditional annotation methods. It was fascinating to demonstrate how gaming psychology could accelerate AI development.",
@@ -117,7 +117,7 @@ const events: Event[] = [
         display: flex;
         flex-direction: column;
         justify-content: flex-end;
-        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 40%);
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.15) 40%, rgba(0, 0, 0, 0.05) 100%);
         transition: all 0.4s ease-in-out;
     }
     .card:hover .card-overlay, .card:focus-visible .card-overlay {
@@ -136,6 +136,7 @@ const events: Event[] = [
         word-wrap: break-word;
         hyphens: auto;
         white-space: pre-line;
+        text-shadow: 3px 3px 0px var(--black);
     }
     .card-details { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; opacity: 0.9; }
     .card-description {
