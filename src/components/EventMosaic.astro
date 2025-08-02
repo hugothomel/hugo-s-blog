@@ -106,9 +106,27 @@ const events: Event[] = [
     .card-inner { width: 100%; height: 100%; display: block; position: relative; }
     .card img { width: 100%; height: 250px; object-fit: cover; display: block; border: none; box-shadow: none; transition: transform 0.4s ease; }
     .card:hover img { transform: scale(1.05); }
-    .card-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%); padding: 3rem 1.5rem 1.5rem; color: var(--white); }
-    .card-content { transform: translateY(calc(100% - 60px)); transition: transform 0.4s ease; }
-    .card:hover .card-content, .card:focus-visible .card-content { transform: translateY(0); }
+    .card-overlay {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 1.5rem;
+        color: var(--white);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 40%);
+        transition: all 0.4s ease-in-out;
+    }
+    .card:hover .card-overlay, .card:focus-visible .card-overlay {
+        justify-content: flex-start;
+        background: rgba(0, 0, 0, 0.8);
+    }
+    .card-content {
+        transition: all 0.4s ease-in-out;
+    }
     .card-title { 
         margin: 0 0 0.5rem 0; 
         font-size: 1.3rem; 
@@ -120,8 +138,19 @@ const events: Event[] = [
         white-space: pre-line;
     }
     .card-details { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.75rem; opacity: 0.9; }
-    .card-description { font-size: 1rem; line-height: 1.5; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-    .card:hover .card-description, .card:focus-visible .card-description { display: block; }
+    .card-description {
+        font-size: 1rem;
+        line-height: 1.5;
+        margin: 0;
+        overflow: hidden;
+        opacity: 0;
+        max-height: 0;
+        transition: opacity 0.3s ease-in-out 0.2s, max-height 0.4s ease-in-out 0.2s;
+    }
+    .card:hover .card-description, .card:focus-visible .card-description {
+        opacity: 1;
+        max-height: 100vh;
+    }
     body.dark-mode .card { background-color: var(--dark-taupe); }
 
     /* --- Modal Styles --- */
